@@ -264,4 +264,3 @@ const root = document.getElementById('root');
 const page = pageQuery === '/' ? 'Home' : pageQuery.replace('/', '').charAt(0).toUpperCase() + pageQuery.slice(1);
 root.appendChild(Pages[page]());
 // Components.log();
-//# sourceMappingURL=main.js.map
