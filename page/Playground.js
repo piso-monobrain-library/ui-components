@@ -16,7 +16,6 @@ function getSelectedElem() {
 
 export default function Playground() {
 	const selectedElem = getSelectedElem();
-	console.log(selectedElem);
 	const { exampleDomstring, descriptions = '' } = selectedElem;
 
 	const template = document.createElement('template');
