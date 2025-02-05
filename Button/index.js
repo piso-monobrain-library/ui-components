@@ -17,8 +17,10 @@ class Default extends HTMLElement {
 
 	initStyle() {
 		this.style.cssText = `
-            color: green;
-            background-color: blue;
+            width: 100px;
+            height: 100px;
+            display:block;
+            background: url(./src/assets/test.png) no-repeat center center / contain;
         `;
 	}
 

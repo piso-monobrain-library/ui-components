@@ -137,3 +137,14 @@ span.code-block {
 	line-height: 1.7;
 	word-break: keep-all;
 }
+
+.description-content li::before {
+	content: '- ';
+}
+.description-content li {
+	padding-left: 0.2rem;
+}
+
+custom-container {
+	background-color: tan;
+}
