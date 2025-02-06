@@ -20,7 +20,7 @@ let Default$1 = class Default extends HTMLElement {
             width: 100px;
             height: 100px;
             display:block;
-            background: url(./src/assets/test.png) no-repeat center center / contain;
+            background: url(/test.png) no-repeat center center / contain;
         `;
 	}
 
@@ -72,8 +72,6 @@ customElements.define('custom-container', Default);
 
 const styles = {
 	default: `
-        color: white;
-        background-color: black;
         padding: 1rem
     `,
 
@@ -124,7 +122,7 @@ function PageHeader(currentPage = 'home') {
 	template.innerHTML = `
 		<header id="page-header">
 			<h1>
-                <a href="/" class="${currentPage === 'home' ? 'active' : ''}">
+                <a href="/ui-components" class="${currentPage === 'home' ? 'active' : ''}">
                     MONO
                 </a>
             </h1>
