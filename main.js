@@ -1,3 +1,74 @@
+function PageHeader(currentPage = 'home') {
+	const template = document.createElement('template');
+
+	const links = ['components', 'playground'];
+
+	template.innerHTML = `
+		<header id="page-header">
+			<h1>
+                <a href="/ui-components" class="${currentPage === 'home' ? 'active' : ''}">
+                    Custom Components
+                </a>
+            </h1>
+            <nav style="border-bottom: 0.1rem solid var(--primary-color); display: flex; flex-direction: row; gap: 1rem;">
+                ${links
+					.map(
+						(link) => `<a class="${currentPage === link ? 'active' : ''}" href="?page=${link}">${link}</a>`
+					)
+					.join('')}
+            </nav>
+		</header>
+	`;
+
+	return template.content.cloneNode(true).firstElementChild;
+}
+
+function Home() {
+	const template = document.createElement('template');
+
+	template.innerHTML = `
+		<article id="home" class="page">
+			${PageHeader().innerHTML}
+			<h2 style="    position: relative; z-index: 100;">
+			사용자 정의 태그를 사용할 때의 이점
+				<blockquote class="quote">
+					Custom Components는 사용자 정의 태그를 사용할 때의 이점을 제공합니다.
+				</blockquote>
+			</h2>
+			<section class="list" style="flex-direction:row; justify-content:center; flex-wrap:wrap; gap:1rem; padding-top:3rem;">
+				<section class='card'>
+					<h3>작업자의 특성</h3>
+					<p>
+						<b>html</b>,
+						<b>js</b>,
+						<b>css</b>,
+						low-level의 퍼블리셔도 이해할 수 있는 수준의 언어로 작성할 수 있다.
+					</p>
+				</section>
+
+				<section class='card'>
+					<h3>유지보수의 용이성</h3>
+					<p>
+						재사용성이 올라감으로써 유지보수가 용이해진다.
+					</p>
+				</section>
+
+				<section class='card'>
+					<h3>추가 기능에 대한 대응</h3>
+					<p>
+						추가 기능에 대한 대응을 쉽게 할 수 있다.
+					</p>
+				</section>
+				
+			</section>
+		</article>
+	`;
+
+	const section = template.content.cloneNode(true).firstElementChild;
+
+	return section;
+}
+
 class Vset extends HTMLElement {
 	constructor() {
 		super();
@@ -39,12 +110,12 @@ class Vset extends HTMLElement {
 	setStyle() {
 		const type = this.getAttribute('type');
 		if (!type) return;
-		this.style.cssText += styles$1[type];
+		this.style.cssText += Vset.styles[type];
 	}
 
 	static get exampleDomstring() {
 		return `
-		<div style="display: flex; flex-direction: row;	flex-wrap: wrap; gap: 1rem;">
+		<div style="display: flex; flex-direction: column;	flex-wrap: wrap; gap: 1rem;">
 			<btn-vset type="start">시작하기</btn-vset>
 			<btn-vset type="restart">다시하기</btn-vset>
             <btn-vset type="begin">처음으로</btn-vset>
@@ -61,36 +132,48 @@ class Vset extends HTMLElement {
 
 		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
 	}
-}
 
-const styles$1 = {
-	start: `
-		background: url(./assets/btn/start.png) no-repeat center center / contain;
-		text-indent: 4.625rem;
-		line-height: 4rem;
-		width: 13.375rem;
-		height: 4.75rem;`,
-	restart: `
-		background: url(./assets/btn/restart.png) no-repeat center center / contain;
-		text-indent: 4.625rem;
-		line-height: 4rem;
-		width: 13.375rem;
-		height: 4.75rem;`,
-	begin: `
-		background: url(./assets/btn/begin.png) no-repeat center center / contain;
-		text-indent: 4.625rem;
-		line-height: 4rem;
-		width: 13.375rem;
-		height: 4.75rem;`,
-	next: `
-		background: url(./assets/btn/next.png) no-repeat center center / contain;
-		width: 3.125rem;
-		height: 3.125rem;`,
-	prev: `
-		background: url(./assets/btn/prev.png) no-repeat center center / contain;
-		width: 3.125rem;
-		height: 3.125rem;`,
-};
+	static get styles() {
+		return {
+			start: `
+			background: url(./assets/btn/start.png) no-repeat center center / contain;
+			text-indent: 4.625rem;
+			line-height: 4rem;
+			width: 13.375rem;
+			height: 4.75rem;`,
+			restart: `
+			background: url(./assets/btn/restart.png) no-repeat center center / contain;
+			text-indent: 4.625rem;
+			line-height: 4rem;
+			width: 13.375rem;
+			height: 4.75rem;`,
+			begin: `
+			background: url(./assets/btn/begin.png) no-repeat center center / contain;
+			text-indent: 4.625rem;
+			line-height: 4rem;
+			width: 13.375rem;
+			height: 4.75rem;`,
+			next: `
+			background: url(./assets/btn/next.png) no-repeat center center / contain;
+			width: 3.125rem;
+			height: 3.125rem;`,
+			prev: `
+			background: url(./assets/btn/prev.png) no-repeat center center / contain;
+			width: 3.125rem;
+			height: 3.125rem;`,
+		};
+	}
+
+	static get defaultDOMString() {
+		return '<btn-vset>예제</btn-vset>';
+	}
+
+	static get styledDOMString() {
+		return Object.keys(Vset.styles)
+			.map((type) => `<btn-vset type="${type}"></btn-vset>`)
+			.join('');
+	}
+}
 
 customElements.define('btn-vset', Vset);
 
@@ -113,17 +196,16 @@ let Default$1 = class Default extends HTMLElement {
 
 	initStyle() {
 		this.style.cssText = `
-            width: 100px;
-            height: 100px;
             display:block;
-            background: url(./assets/test.png) no-repeat center center / contain;
         `;
 	}
 
 	static get exampleDomstring() {
-		return `
-            <btn-default>btn-default 예제 버튼</btn-default>
-        `;
+		return `<btn-default>btn-default 예제 버튼</btn-default>`;
+	}
+
+	static get defaultDOMString() {
+		return '<btn-default>기본 버튼</btn-default>';
 	}
 };
 
@@ -202,114 +284,58 @@ var index = /*#__PURE__*/Object.freeze({
 	Default: Default
 });
 
-const log = () => console.log('Load all Components..');
-
 var Components$1 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	Button: index$1,
-	Container: index,
-	log: log
+	Container: index
 });
-
-function PageHeader(currentPage = 'home') {
-	const template = document.createElement('template');
-
-	const links = ['components', 'playground'];
-
-	template.innerHTML = `
-		<header id="page-header">
-			<h1>
-                <a href="/ui-components" class="${currentPage === 'home' ? 'active' : ''}">
-                    MONO
-                </a>
-            </h1>
-            <nav style="border-bottom: 0.1rem solid var(--primary-color); display: flex; flex-direction: row; gap: 1rem;">
-                ${links
-					.map(
-						(link) => `<a class="${currentPage === link ? 'active' : ''}" href="?page=${link}">${link}</a>`
-					)
-					.join('')}
-            </nav>
-		</header>
-	`;
-
-	return template.content.cloneNode(true).firstElementChild;
-}
-
-function Home() {
-	const template = document.createElement('template');
-
-	template.innerHTML = `
-		<article id="home" class="page">
-			${PageHeader().innerHTML}
-			<h2 style="    position: relative; z-index: 100;">사용자 정의 태그를 사용할 때의 이점</h2>
-			<section class="list" style="flex-direction:row; justify-content:center; flex-wrap:wrap; gap:1rem; padding-top:1.5rem;">
-
-				<section class='card'>
-					<h3>작업자의 특성</h3>
-					<p>
-						<b>html</b>,
-						<b>js</b>,
-						<b>css</b>,
-						low-level의 퍼블리셔도 이해할 수 있는 수준의 언어로 작성할 수 있다.
-					</p>
-				</section>
-
-				<section class='card'>
-					<h3>유지보수의 용이성</h3>
-					<p>
-						재사용성이 올라감으로써 유지보수가 용이해진다.
-					</p>
-				</section>
-
-				<section class='card'>
-					<h3>추가 기능에 대한 대응</h3>
-					<p>
-						추가 기능에 대한 대응을 쉽게 할 수 있다.
-					</p>
-				</section>
-				
-			</section>
-		</article>
-	`;
-
-	const section = template.content.cloneNode(true).firstElementChild;
-
-	return section;
-}
 
 function Components() {
 	const template = document.createElement('template');
+
+	const components = Object.entries(Components$1).map(([component, varints]) => ({
+		component,
+		variants: Object.entries(varints).map(([type, variant]) => ({ type, variant })),
+	}));
 
 	template.innerHTML = `
 		<article id="components" class="page">
 			${PageHeader('components').innerHTML}
 			<h2>Components</h2>
-			<section class="list">
-				<ul>
-					<h3>Button</h3>
-					<li><a>Default</a></li>
-					<li><a>Vset</a></li>
-				</ul>
-				<ul>
-					<h3>Container</h3>
-					<li><a>Default</a></li>
-				</ul>
+			<section class="interaction list">
+				${
+					// prettier-ignore
+					components.map(
+						({ component, variants }) =>
+							`<ul class="list" style="gap:0.5rem;">
+								<h3>${component}</h3>
+								${variants.map(
+									({ type, variant }) =>
+										`<li style="
+												display: flex; 
+												gap: 1rem; 
+												border:2px solid var(--primary-color);
+												border-radius: 0.5rem;
+												padding: 1rem 0.5rem;
+												">
+											<h4 style="font-size:1.2rem; font-weight:bold; color:var(--secondary-color);">${type}</h4>
+											<a data-component="${component}" data-type="${type}">${variant.styledDOMString ?? variant.defaultDOMString ?? 'No defaultDOMString'}</a>
+										</li>`).join('')}</ul>`).join('')
+				}
 			</section>
 		</article>
 	`;
 
 	const section = template.content.cloneNode(true).firstElementChild;
 
-	section.querySelector('.list').addEventListener('click', (e) => {
+	section.querySelector('.interaction').addEventListener('click', (e) => {
 		e.preventDefault();
-		const { target } = e;
+		const target = e.target.closest('a');
 
 		if (target.tagName !== 'A') return;
 
-		const component = target.closest('ul').querySelector('h3').textContent;
-		window.location.href = `?page=playground&&component=${component}&&type=${target.textContent}`;
-		console.log(component);
+		const { component, type } = target.dataset;
+		window.location.href = `?page=playground&&component=${component}&&type=${type}`;
 	});
 
 	return section;
@@ -381,4 +407,3 @@ const root = document.getElementById('root');
 
 const page = pageQuery === '/' ? 'Home' : pageQuery.replace('/', '').charAt(0).toUpperCase() + pageQuery.slice(1);
 root.appendChild(Pages[page]());
-// Components.log();

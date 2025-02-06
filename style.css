@@ -155,3 +155,17 @@ span.code-block {
 .description-content li {
 	padding-left: 0.2rem;
 }
+
+blockquote.quote {
+	font-size: 1.2rem;
+	font-weight: 700;
+	padding: 0.2rem;
+	opacity: 0.8;
+}
+
+blockquote.quote::before {
+	content: '“';
+}
+blockquote.quote::after {
+	content: '”';
+}
