@@ -7,7 +7,7 @@ export default function PageHeader(currentPage = 'home') {
 		<header id="page-header">
 			<h1>
                 <a href="/ui-components" class="${currentPage === 'home' ? 'active' : ''}">
-                    MONO
+                    Custom Components
                 </a>
             </h1>
             <nav style="border-bottom: 0.1rem solid var(--primary-color); display: flex; flex-direction: row; gap: 1rem;">

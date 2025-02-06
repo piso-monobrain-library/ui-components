@@ -15,7 +15,7 @@
 		"build": "rollup -c",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d dist",
-		"start": "npm run predeploy && npm run deploy"
+		"start": "npm run predeploy && npm run deploy && echo https://piso-monobrain-library.github.io/ui-components"
 	},
 	"type": "module"
 }
