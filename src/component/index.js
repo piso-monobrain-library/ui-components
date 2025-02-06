@@ -1,6 +1,5 @@
 import * as Button from './Button/index.js';
 import * as Container from './Container/index.js';
+import * as Icon from './Icon/index.js';
 
-const log = () => console.log('Load all Components..');
-
-export { Button, Container, log };
+export { Button, Container, Icon };

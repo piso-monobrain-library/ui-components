@@ -19,17 +19,16 @@ class Default extends HTMLElement {
 
 	initStyle() {
 		this.style.cssText = `
-            width: 100px;
-            height: 100px;
             display:block;
-            background: url(./assets/test.png) no-repeat center center / contain;
         `;
 	}
 
 	static get exampleDomstring() {
-		return `
-            <btn-default>btn-default 예제 버튼</btn-default>
-        `;
+		return `<btn-default>btn-default 예제 버튼</btn-default>`;
+	}
+
+	static get defaultDOMString() {
+		return '<btn-default>기본 버튼</btn-default>';
 	}
 }
 

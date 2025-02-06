@@ -26,6 +26,10 @@ class Default extends HTMLElement {
 
 		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
 	}
+
+	static get defaultDOMString() {
+		return '<custom-container>기본 컨테이너</custom-container>';
+	}
 }
 
 customElements.define('custom-container', Default);

@@ -6,9 +6,13 @@ export default function Home() {
 	template.innerHTML = `
 		<article id="home" class="page">
 			${PageHeader().innerHTML}
-			<h2 style="    position: relative; z-index: 100;">사용자 정의 태그를 사용할 때의 이점</h2>
-			<section class="list" style="flex-direction:row; justify-content:center; flex-wrap:wrap; gap:1rem; padding-top:1.5rem;">
-
+			<h2 style="    position: relative; z-index: 100;">
+			사용자 정의 태그를 사용할 때의 이점
+				<blockquote class="quote">
+					Custom Components는 사용자 정의 태그를 사용할 때의 이점을 제공합니다.
+				</blockquote>
+			</h2>
+			<section class="list" style="flex-direction:row; justify-content:center; flex-wrap:wrap; gap:1rem; padding-top:3rem;">
 				<section class='card'>
 					<h3>작업자의 특성</h3>
 					<p>

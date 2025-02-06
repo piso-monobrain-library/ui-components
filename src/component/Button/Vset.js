@@ -39,12 +39,12 @@ class Vset extends HTMLElement {
 	setStyle() {
 		const type = this.getAttribute('type');
 		if (!type) return;
-		this.style.cssText += styles[type];
+		this.style.cssText += Vset.styles[type];
 	}
 
 	static get exampleDomstring() {
 		return `
-		<div style="display: flex; flex-direction: row;	flex-wrap: wrap; gap: 1rem;">
+		<div style="display: flex; flex-direction: column;	flex-wrap: wrap; gap: 1rem;">
 			<btn-vset type="start">시작하기</btn-vset>
 			<btn-vset type="restart">다시하기</btn-vset>
             <btn-vset type="begin">처음으로</btn-vset>
@@ -61,36 +61,48 @@ class Vset extends HTMLElement {
 
 		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
 	}
-}
 
-const styles = {
-	start: `
-		background: url(./assets/btn/start.png) no-repeat center center / contain;
-		text-indent: 4.625rem;
-		line-height: 4rem;
-		width: 13.375rem;
-		height: 4.75rem;`,
-	restart: `
-		background: url(./assets/btn/restart.png) no-repeat center center / contain;
-		text-indent: 4.625rem;
-		line-height: 4rem;
-		width: 13.375rem;
-		height: 4.75rem;`,
-	begin: `
-		background: url(./assets/btn/begin.png) no-repeat center center / contain;
-		text-indent: 4.625rem;
-		line-height: 4rem;
-		width: 13.375rem;
-		height: 4.75rem;`,
-	next: `
-		background: url(./assets/btn/next.png) no-repeat center center / contain;
-		width: 3.125rem;
-		height: 3.125rem;`,
-	prev: `
-		background: url(./assets/btn/prev.png) no-repeat center center / contain;
-		width: 3.125rem;
-		height: 3.125rem;`,
-};
+	static get styles() {
+		return {
+			start: `
+			background: url(./assets/btn/start.png) no-repeat center center / contain;
+			text-indent: 4.625rem;
+			line-height: 4rem;
+			width: 13.375rem;
+			height: 4.75rem;`,
+			restart: `
+			background: url(./assets/btn/restart.png) no-repeat center center / contain;
+			text-indent: 4.625rem;
+			line-height: 4rem;
+			width: 13.375rem;
+			height: 4.75rem;`,
+			begin: `
+			background: url(./assets/btn/begin.png) no-repeat center center / contain;
+			text-indent: 4.625rem;
+			line-height: 4rem;
+			width: 13.375rem;
+			height: 4.75rem;`,
+			next: `
+			background: url(./assets/btn/next.png) no-repeat center center / contain;
+			width: 3.125rem;
+			height: 3.125rem;`,
+			prev: `
+			background: url(./assets/btn/prev.png) no-repeat center center / contain;
+			width: 3.125rem;
+			height: 3.125rem;`,
+		};
+	}
+
+	static get defaultDOMString() {
+		return '<btn-vset>예제</btn-vset>';
+	}
+
+	static get styledDOMString() {
+		return Object.keys(Vset.styles)
+			.map((type) => `<btn-vset type="${type}"></btn-vset>`)
+			.join('');
+	}
+}
 
 customElements.define('btn-vset', Vset);
 
