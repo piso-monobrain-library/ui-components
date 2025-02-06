@@ -1,3 +1,5 @@
+import Vset from './Vset.js';
+
 class Default extends HTMLElement {
 	constructor() {
 		super();
@@ -20,7 +22,7 @@ class Default extends HTMLElement {
             width: 100px;
             height: 100px;
             display:block;
-            background: url(./src/assets/test.png) no-repeat center center / contain;
+            background: url(./assets/test.png) no-repeat center center / contain;
         `;
 	}
 
@@ -33,4 +35,4 @@ class Default extends HTMLElement {
 
 customElements.define('btn-default', Default);
 
-export { Default };
+export { Default, Vset };

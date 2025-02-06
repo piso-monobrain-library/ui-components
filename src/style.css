@@ -34,6 +34,9 @@ body {
 	color: var(--text-color);
 	text-decoration: none;
 	list-style-type: none;
+	font-family: 'Sunflower', serif;
+	font-weight: 300;
+	font-style: normal;
 }
 
 main.root {
@@ -54,17 +57,17 @@ main.root ul {
 
 h1 {
 	font-size: 3rem;
-	font-weight: bold;
+	font-weight: 900;
 }
 
 h2 {
 	font-size: 2rem;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 h3 {
 	font-size: 1.5rem;
-	font-weight: bold;
+	font-weight: 500;
 }
 
 h1,
@@ -76,6 +79,11 @@ h3 {
 a:hover,
 a.active {
 	color: var(--primary-color);
+}
+
+a {
+	color: var(--text-color);
+	cursor: url(./assets/cursor.svg), pointer;
 }
 
 button.btn {
@@ -117,8 +125,8 @@ article.page {
 	padding: 1rem;
 }
 span.code-block {
-	background: var(--secondary-color);
-	color: var(--secondary-text-color);
+	color: var(--secondary-color);
+	background: var(--secondary-text-color);
 	padding: 0.2rem;
 	border-radius: 0.2rem;
 }
@@ -132,6 +140,9 @@ span.code-block {
 	background: var(--box-background);
 	box-shadow: var(--box-shadow);
 }
+.card h3 {
+	color: var(--primary-color);
+}
 .card h3,
 .card p {
 	line-height: 1.7;
@@ -143,8 +154,4 @@ span.code-block {
 }
 .description-content li {
 	padding-left: 0.2rem;
-}
-
-custom-container {
-	background-color: tan;
 }

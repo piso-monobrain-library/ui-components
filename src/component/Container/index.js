@@ -32,8 +32,6 @@ customElements.define('custom-container', Default);
 
 const styles = {
 	default: `
-        color: white;
-        background-color: black;
         padding: 1rem
     `,
 

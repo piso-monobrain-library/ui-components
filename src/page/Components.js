@@ -11,6 +11,7 @@ export default function Components() {
 				<ul>
 					<h3>Button</h3>
 					<li><a>Default</a></li>
+					<li><a>Vset</a></li>
 				</ul>
 				<ul>
 					<h3>Container</h3>

@@ -6,7 +6,7 @@ export default function PageHeader(currentPage = 'home') {
 	template.innerHTML = `
 		<header id="page-header">
 			<h1>
-                <a href="/" class="${currentPage === 'home' ? 'active' : ''}">
+                <a href="/ui-components" class="${currentPage === 'home' ? 'active' : ''}">
                     MONO
                 </a>
             </h1>
