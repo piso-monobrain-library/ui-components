@@ -69,7 +69,7 @@ function Home() {
 	return section;
 }
 
-class Vset extends HTMLElement {
+let Vset$1 = class Vset extends HTMLElement {
 	constructor() {
 		super();
 		this.textContent.trim() === '' ? '버튼 텍스트를 입력하세요.' : this.textContent;
@@ -173,11 +173,11 @@ class Vset extends HTMLElement {
 			.map((type) => `<btn-vset type="${type}"></btn-vset>`)
 			.join('');
 	}
-}
+};
 
-customElements.define('btn-vset', Vset);
+customElements.define('btn-vset', Vset$1);
 
-let Default$1 = class Default extends HTMLElement {
+let Default$2 = class Default extends HTMLElement {
 	constructor() {
 		super();
 		this.textContent.trim() === '' ? '버튼 텍스트를 입력하세요.' : this.textContent;
@@ -209,15 +209,15 @@ let Default$1 = class Default extends HTMLElement {
 	}
 };
 
-customElements.define('btn-default', Default$1);
+customElements.define('btn-default', Default$2);
 
-var index$1 = /*#__PURE__*/Object.freeze({
+var index$2 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
-	Default: Default$1,
-	Vset: Vset
+	Default: Default$2,
+	Vset: Vset$1
 });
 
-class Default extends HTMLElement {
+let Default$1 = class Default extends HTMLElement {
 	constructor() {
 		super();
 		this.setStyle();
@@ -245,9 +245,13 @@ class Default extends HTMLElement {
 
 		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
 	}
-}
 
-customElements.define('custom-container', Default);
+	static get defaultDOMString() {
+		return '<custom-container>기본 컨테이너</custom-container>';
+	}
+};
+
+customElements.define('custom-container', Default$1);
 
 const styles = {
 	default: `
@@ -279,15 +283,125 @@ const styles = {
     `,
 };
 
+var index$1 = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	Default: Default$1
+});
+
+const tagName = 'custom-icon-circleno';
+class CircleNo extends HTMLElement {
+	constructor() {
+		super();
+
+		this.initStyle();
+		this.setStyle();
+	}
+
+	initStyle() {
+		this.style.cssText = `
+		:host{
+			background-color: red;
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			position: relative;
+			}
+			
+			:host::before {
+				content: attr(data-no);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				color: white;
+			}`;
+	}
+
+	setStyle() {
+		const type = this.getAttribute('type');
+		if (!type) return;
+		this.style.cssText += Vset.styles[type];
+	}
+
+	static get exampleDomstring() {
+		return `<${tagName} data-no="1"></${tagName}>`;
+	}
+
+	static get descriptions() {
+		const descriptions = [
+			//
+			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다. ex) <span class="code-block">&lt;custom-container type="primary"&gt</span>',
+		];
+
+		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
+	}
+
+	// static get styles() {
+	// 	return {};
+	// }
+
+	static get defaultDOMString() {
+		return `<${tagName} data-no="1">예제</${tagName}>`;
+	}
+
+	// static get styledDOMString() {
+	// 	return Object.keys(CircleNo.styles)
+	// 		.map((type) => `<${tagName} type="${type}"></${tagName}>`)
+	// 		.join('');
+	// }
+}
+
+customElements.define(tagName, CircleNo);
+
+class Default extends HTMLElement {
+	constructor() {
+		super();
+		this.textContent.trim() === '' ? '버튼 텍스트를 입력하세요.' : this.textContent;
+
+		this.clickable();
+
+		this.initStyle();
+	}
+
+	clickable() {
+		if (this.getAttribute('clickable') === 'true')
+			this.addEventListener('click', () => {
+				console.log('sound를 등록하자');
+			});
+	}
+
+	initStyle() {
+		this.style.cssText = `
+            display:block;
+        `;
+	}
+
+	static get exampleDomstring() {
+		return `<custom-icon>custom-icon 예제 버튼</custom-icon>`;
+	}
+
+	static get defaultDOMString() {
+		return '<custom-icon>Custom Icon</custom-icon>';
+	}
+}
+
+customElements.define('custom-icon', Default);
+
 var index = /*#__PURE__*/Object.freeze({
 	__proto__: null,
+	CircleNo: CircleNo,
 	Default: Default
 });
 
 var Components$1 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
-	Button: index$1,
-	Container: index
+	Button: index$2,
+	Container: index$1,
+	Icon: index
 });
 
 function Components() {
