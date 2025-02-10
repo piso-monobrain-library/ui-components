@@ -1,12 +1,20 @@
 class Default extends HTMLElement {
 	constructor() {
 		super();
+		this.initStyle();
 		this.setStyle();
+	}
+
+	initStyle() {
+		this.style.cssText = `
+            display:block;
+			line-height: 1.5;
+        `;
 	}
 
 	setStyle() {
 		const type = this.getAttribute('type');
-		this.style.cssText = styles[type ?? 'default'];
+		this.style.cssText += styles[type ?? 'default'];
 	}
 
 	static get exampleDomstring() {
@@ -41,26 +49,26 @@ const styles = {
 	primary: `
         color: slategrey;
         background-color: black;
-        padding: 1rem
     `,
 
 	secondary: `
         color: black;
         background-color: lightgrey;
-        padding: 1rem
     `,
 
 	success: `
         color: white;
         background-color: green;
-        padding: 1rem
     `,
 
 	danger: `
         color: white;
         background-color: red;
-        padding: 1rem
     `,
+
+	description:`
+		color: darkgreen;
+	`
 };
 
 export { Default };

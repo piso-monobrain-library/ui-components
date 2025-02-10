@@ -1,7 +1,7 @@
 export default function PageHeader(currentPage = 'home') {
 	const template = document.createElement('template');
 
-	const links = ['components', 'playground'];
+	const links = ['components', 'playground', 'simulator'];
 
 	template.innerHTML = `
 		<header id="page-header">
