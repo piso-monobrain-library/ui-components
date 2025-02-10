@@ -24,6 +24,7 @@ class Vset extends HTMLElement {
 		this.style.cssText = `
 			display: inline-block;
 			cursor: pointer;
+			color: white;
 			text-shadow: 0px 0.2rem 0px #0B4F8E;
 			font-family: "Noto Sans KR", serif;
 			font-optical-sizing: auto;
@@ -44,22 +45,26 @@ class Vset extends HTMLElement {
 
 	static get exampleDomstring() {
 		return `
-		<div style="display: flex; flex-direction: column;	flex-wrap: wrap; gap: 1rem;">
-			<btn-vset type="start">시작하기</btn-vset>
-			<btn-vset type="restart">다시하기</btn-vset>
-            <btn-vset type="begin">처음으로</btn-vset>
-            <btn-vset type="next" aria-label="다음"></btn-vset>
-            <btn-vset type="prev" aria-label="이전"></btn-vset>
-		</div>`;
+<div style="display: flex; flex-direction: column;	flex-wrap: wrap; gap: 1rem;">
+	<btn-vset type="start">시작하기</btn-vset>
+	<btn-vset type="restart">다시하기</btn-vset>
+	<btn-vset type="begin">처음으로</btn-vset>
+	<btn-vset type="next" aria-label="다음"></btn-vset>
+	<btn-vset type="prev" aria-label="이전"></btn-vset>
+</div>`;
 	}
 
 	static get descriptions() {
-		const descriptions = [
+		return  [
 			//
-			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다. ex) <span class="code-block">&lt;custom-container type="primary"&gt</span>',
+			'스마트 학습자료 기술가정 시작하기 버튼: <btn-vset type="start">시작하기</btn-vset>',
+			'스마트 학습자료 기술가정 다시하기 버튼: <btn-vset type="restart">다시하기</btn-vset>',
+			'스마트 학습자료 기술가정 처음으로 버튼: <btn-vset type="begin">처음으로</btn-vset>',
+			'스마트 학습자료 기술가정 다음 버튼: <btn-vset type="next" aria-label="다음"></btn-vset>',
+			'스마트 학습자료 기술가정 이전 버튼: <btn-vset type="prev" aria-label="이전"></btn-vset>',
 		];
 
-		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
+
 	}
 
 	static get styles() {

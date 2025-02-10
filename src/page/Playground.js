@@ -1,6 +1,8 @@
 import PageHeader from '../component/PageHeader.js';
 import * as Components from '../component/index.js';
 
+
+
 function getSelectedElem() {
 	const queryString = new URLSearchParams(window.location.search);
 	const component = queryString.get('component');
@@ -13,10 +15,9 @@ function getSelectedElem() {
 		  }
 		: Components[component][type];
 }
-
 export default function Playground() {
 	const selectedElem = getSelectedElem();
-	const { exampleDomstring, descriptions = '' } = selectedElem;
+	const { exampleDomstring, descriptions  } = selectedElem;
 
 	const template = document.createElement('template');
 
@@ -25,14 +26,14 @@ export default function Playground() {
 			${PageHeader('playground').innerHTML}
 			<h2>Playground</h2>
 			<section id="playground-content" class="two-panel-container">
-				<textarea class="code language-javascript" rows="5"></textarea>
+				<pre class="code-content"><code class="language-javascript" contenteditable="true"></code></pre>
 				<div class="result"></div>
 			</section>
 
 			<section id="playground-description" class="description">
 				<h3>Descriptions</h3>
 				<div class="description-content">
-					${descriptions}
+					</ul>
 				</div>
 			</section>
 		</article>
@@ -40,15 +41,38 @@ export default function Playground() {
 
 	const element = template.content.cloneNode(true).firstElementChild;
 
-	const textarea = element.querySelector('.code.language-javascript');
-	textarea.value = exampleDomstring.trim();
+	const $code = element.querySelector('pre.code-content code');
+	const tmp = hljs.highlight(exampleDomstring.trim(), { language: 'javascript' }).value
+
+	$code.innerHTML = tmp
 
 	const resultDiv = element.querySelector('.result');
 	resultDiv.innerHTML = exampleDomstring.trim();
 
-	textarea.addEventListener('input', () => {
-		resultDiv.innerHTML = textarea.value;
+	const $descriptionContent = element.querySelector('.description-content');
+	
+	const allDescriptions = descriptions
+	if(allDescriptions){
+		$descriptionContent.innerHTML = `<ul class="list">${descriptions.map((description) => `<li>${hljs.highlight(description, { language: 'html' }).value}</li>`).join('')}</ul>`;
+	}else{
+		const components = Object.entries(Components).map(([component, variants]) => [component, variants]);
+
+		const descriptions = components.map(([component, variants]) => ({component, variants: Object.entries(variants)}));
+		const res = descriptions.map(({component, variants})=>({component, variants: variants.map(([name, variant])=>({name, descriptions: variant.descriptions}))}))
+		$descriptionContent.innerHTML = res.map(({component, variants})=>`
+			<h4><b style="color: var(--secondary-color);">${component}</b></h4>
+			<ul class="list" style="border:solid 0.1rem var(--primary-color); padding:1rem; border-radius:1rem;">${variants.map(({name, descriptions = []}) => `
+				<h5><b>${name}</b></h5>
+
+			${descriptions.map(description => `<li>${hljs.highlight(description, { language: 'html' }).value}</li>`).join('')}`).join('')}</ul>
+
+		`).join('')
+	}
+
+	$code.addEventListener('input', () => {
+		resultDiv.innerHTML = $code.textContent;
 	});
+
 
 	return element;
 }
