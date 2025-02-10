@@ -7,6 +7,11 @@
 
 	--box-background: linear-gradient(145deg, #fdffff, #d4d8d9);
 	--box-shadow: 20px 20px 60px #c9cccd, -20px -20px 60px #ffffff;
+	--code-color: #c7d2dd;
+}
+::selection{
+	background: rgb(124, 27, 124);
+	color:rgb(250, 238, 216);
 }
 /* 다크 모드 색상 변수 */
 @media (prefers-color-scheme: dark) {
@@ -16,8 +21,17 @@
 
 		--box-background: linear-gradient(145deg, #2f4256, #283848);
 		--box-shadow: 30px 30px 100px #161f28, -30px -30px 100px #425d78;
+		--code-color: #162330;
 	}
 }
+
+pre.code-content{
+	background-color: var(--code-color);
+	padding: 1rem;
+	border-radius: 1rem;
+	min-height: 10rem;
+}
+
 
 body {
 	background: var(--background-color);
@@ -69,10 +83,14 @@ h3 {
 	font-size: 1.5rem;
 	font-weight: 500;
 }
+h4 {
+	font-size: 1.3rem;
+}
+h5{
+	font-size: 1.2rem;
+}
 
-h1,
-h2,
-h3 {
+h1,h2,h3,h4,h5 {
 	padding: 0.2rem 0.4rem;
 }
 
@@ -110,7 +128,7 @@ textarea {
 	gap: 1rem;
 	width: 100%;
 }
-.two-panel-container .code {
+.two-panel-container .code-content {
 	width: 50%;
 	border: 0.1rem solid var(--primary-color);
 	padding: 1rem;
@@ -125,8 +143,7 @@ article.page {
 	padding: 1rem;
 }
 span.code-block {
-	color: var(--secondary-color);
-	background: var(--secondary-text-color);
+	background: var(--code-color);
 	padding: 0.2rem;
 	border-radius: 0.2rem;
 }

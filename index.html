@@ -15,6 +15,23 @@
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Sunflower:wght@300&display=swap"
 			rel="stylesheet"
 		/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+		<!-- and it's easy to individually load additional languages -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+		<script>
+			function setTheme() {
+				const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'atom-one-dark' : 'github';
+				const link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${theme}.min.css`;
+				document.head.appendChild(link);
+			}
+
+			// 페이지 로드 시 테마 설정
+			setTheme();
+		</script>
 	</head>
 	<body>
 		<main id="root"></main>

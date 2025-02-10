@@ -95,6 +95,7 @@ let Vset$1 = class Vset extends HTMLElement {
 		this.style.cssText = `
 			display: inline-block;
 			cursor: pointer;
+			color: white;
 			text-shadow: 0px 0.2rem 0px #0B4F8E;
 			font-family: "Noto Sans KR", serif;
 			font-optical-sizing: auto;
@@ -115,22 +116,26 @@ let Vset$1 = class Vset extends HTMLElement {
 
 	static get exampleDomstring() {
 		return `
-		<div style="display: flex; flex-direction: column;	flex-wrap: wrap; gap: 1rem;">
-			<btn-vset type="start">시작하기</btn-vset>
-			<btn-vset type="restart">다시하기</btn-vset>
-            <btn-vset type="begin">처음으로</btn-vset>
-            <btn-vset type="next" aria-label="다음"></btn-vset>
-            <btn-vset type="prev" aria-label="이전"></btn-vset>
-		</div>`;
+<div style="display: flex; flex-direction: column;	flex-wrap: wrap; gap: 1rem;">
+	<btn-vset type="start">시작하기</btn-vset>
+	<btn-vset type="restart">다시하기</btn-vset>
+	<btn-vset type="begin">처음으로</btn-vset>
+	<btn-vset type="next" aria-label="다음"></btn-vset>
+	<btn-vset type="prev" aria-label="이전"></btn-vset>
+</div>`;
 	}
 
 	static get descriptions() {
-		const descriptions = [
+		return  [
 			//
-			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다. ex) <span class="code-block">&lt;custom-container type="primary"&gt</span>',
+			'스마트 학습자료 기술가정 시작하기 버튼: <btn-vset type="start">시작하기</btn-vset>',
+			'스마트 학습자료 기술가정 다시하기 버튼: <btn-vset type="restart">다시하기</btn-vset>',
+			'스마트 학습자료 기술가정 처음으로 버튼: <btn-vset type="begin">처음으로</btn-vset>',
+			'스마트 학습자료 기술가정 다음 버튼: <btn-vset type="next" aria-label="다음"></btn-vset>',
+			'스마트 학습자료 기술가정 이전 버튼: <btn-vset type="prev" aria-label="이전"></btn-vset>',
 		];
 
-		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
+
 	}
 
 	static get styles() {
@@ -201,15 +206,25 @@ let Default$2 = class Default extends HTMLElement {
 	}
 
 	static get exampleDomstring() {
-		return `<btn-default>btn-default 예제 버튼</btn-default>`;
+		return `<custom-button>custom-button 예제 버튼</custom-button>`;
 	}
+
 
 	static get defaultDOMString() {
-		return '<btn-default>기본 버튼</btn-default>';
+		return '<custom-button>기본 버튼</custom-button>';
 	}
+
+	static get descriptions() {
+		return  [
+			'과목 또는 프로젝트별로 버튼을 설정할 수 있습니다.',
+			'사운드나, ios 대응 등에 있어 매번 대응할 필요없이 작성할 수 있습니다.',
+			'기본 버튼위에 css 등으로 스타일을 적용할 수 있습니다. 다음 css텍스트를 위에 추가해보세요: <style>custom-button {border:1px solid red; color: red;}</style>' 
+		];
+	}
+
 };
 
-customElements.define('btn-default', Default$2);
+customElements.define('custom-button', Default$2);
 
 var index$2 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -235,15 +250,14 @@ let Default$1 = class Default extends HTMLElement {
 	}
 
 	static get descriptions() {
-		const descriptions = [
+		return [
 			//
-			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다. ex) <span class="code-block">&lt;custom-container type="primary"&gt</span>',
-			'다양한 스타일을 적용할 수 있습니다: <span class="code-block">&lt;custom-container type="secondary"&gt</span>',
-			'성공 메시지를 나타내기 위해 사용할 수 있습니다: <span class="code-block">&lt;custom-container type="success"&gt</span>',
-			'위험 메시지를 나타내기 위해 사용할 수 있습니다: <span class="code-block">&lt;custom-container type="danger"&gt</span>',
+			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다: <custom-container type="primary">',
+			'다양한 스타일을 적용할 수 있습니다: <custom-container type="secondary">',
+			'성공 메시지를 나타내기 위해 사용할 수 있습니다: <custom-container type="success">',
+			'위험 메시지를 나타내기 위해 사용할 수 있습니다: <custom-container type="danger">',
 		];
 
-		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
 	}
 
 	static get defaultDOMString() {
@@ -332,12 +346,11 @@ class CircleNo extends HTMLElement {
 	}
 
 	static get descriptions() {
-		const descriptions = [
+		return [
 			//
 			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다. ex) <span class="code-block">&lt;custom-container type="primary"&gt</span>',
 		];
 
-		return `<ul class="list"">${descriptions.map((description) => `<li>${description}</li>`).join('')}</ul>`;
 	}
 
 	// static get styles() {
@@ -467,10 +480,9 @@ function getSelectedElem() {
 		  }
 		: Components$1[component][type];
 }
-
 function Playground() {
 	const selectedElem = getSelectedElem();
-	const { exampleDomstring, descriptions = '' } = selectedElem;
+	const { exampleDomstring, descriptions  } = selectedElem;
 
 	const template = document.createElement('template');
 
@@ -479,14 +491,14 @@ function Playground() {
 			${PageHeader('playground').innerHTML}
 			<h2>Playground</h2>
 			<section id="playground-content" class="two-panel-container">
-				<textarea class="code language-javascript" rows="5"></textarea>
+				<pre class="code-content"><code class="language-javascript" contenteditable="true"></code></pre>
 				<div class="result"></div>
 			</section>
 
 			<section id="playground-description" class="description">
 				<h3>Descriptions</h3>
 				<div class="description-content">
-					${descriptions}
+					</ul>
 				</div>
 			</section>
 		</article>
@@ -494,15 +506,38 @@ function Playground() {
 
 	const element = template.content.cloneNode(true).firstElementChild;
 
-	const textarea = element.querySelector('.code.language-javascript');
-	textarea.value = exampleDomstring.trim();
+	const $code = element.querySelector('pre.code-content code');
+	const tmp = hljs.highlight(exampleDomstring.trim(), { language: 'javascript' }).value;
+
+	$code.innerHTML = tmp;
 
 	const resultDiv = element.querySelector('.result');
 	resultDiv.innerHTML = exampleDomstring.trim();
 
-	textarea.addEventListener('input', () => {
-		resultDiv.innerHTML = textarea.value;
+	const $descriptionContent = element.querySelector('.description-content');
+	
+	const allDescriptions = descriptions;
+	if(allDescriptions){
+		$descriptionContent.innerHTML = `<ul class="list">${descriptions.map((description) => `<li>${hljs.highlight(description, { language: 'html' }).value}</li>`).join('')}</ul>`;
+	}else {
+		const components = Object.entries(Components$1).map(([component, variants]) => [component, variants]);
+
+		const descriptions = components.map(([component, variants]) => ({component, variants: Object.entries(variants)}));
+		const res = descriptions.map(({component, variants})=>({component, variants: variants.map(([name, variant])=>({name, descriptions: variant.descriptions}))}));
+		$descriptionContent.innerHTML = res.map(({component, variants})=>`
+			<h4><b style="color: var(--secondary-color);">${component}</b></h4>
+			<ul class="list" style="border:solid 0.1rem var(--primary-color); padding:1rem; border-radius:1rem;">${variants.map(({name, descriptions = []}) => `
+				<h5><b>${name}</b></h5>
+
+			${descriptions.map(description => `<li>${hljs.highlight(description, { language: 'html' }).value}</li>`).join('')}`).join('')}</ul>
+
+		`).join('');
+	}
+
+	$code.addEventListener('input', () => {
+		resultDiv.innerHTML = $code.textContent;
 	});
+
 
 	return element;
 }
