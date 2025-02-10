@@ -44,7 +44,6 @@ body {
 	border: none;
 	outline: none;
 	font-family: inherit;
-	font-size: inherit;
 	color: var(--text-color);
 	text-decoration: none;
 	list-style-type: none;

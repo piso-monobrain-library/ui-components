@@ -1,7 +1,7 @@
 function PageHeader(currentPage = 'home') {
 	const template = document.createElement('template');
 
-	const links = ['components', 'playground'];
+	const links = ['components', 'playground', 'simulator'];
 
 	template.innerHTML = `
 		<header id="page-header">
@@ -23,7 +23,7 @@ function PageHeader(currentPage = 'home') {
 	return template.content.cloneNode(true).firstElementChild;
 }
 
-function Home() {
+function Home$1() {
 	const template = document.createElement('template');
 
 	template.innerHTML = `
@@ -69,7 +69,7 @@ function Home() {
 	return section;
 }
 
-let Vset$1 = class Vset extends HTMLElement {
+class Vset extends HTMLElement {
 	constructor() {
 		super();
 		this.textContent.trim() === '' ? '버튼 텍스트를 입력하세요.' : this.textContent;
@@ -178,9 +178,9 @@ let Vset$1 = class Vset extends HTMLElement {
 			.map((type) => `<btn-vset type="${type}"></btn-vset>`)
 			.join('');
 	}
-};
+}
 
-customElements.define('btn-vset', Vset$1);
+customElements.define('btn-vset', Vset);
 
 let Default$2 = class Default extends HTMLElement {
 	constructor() {
@@ -229,18 +229,26 @@ customElements.define('custom-button', Default$2);
 var index$2 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	Default: Default$2,
-	Vset: Vset$1
+	Vset: Vset
 });
 
 let Default$1 = class Default extends HTMLElement {
 	constructor() {
 		super();
+		this.initStyle();
 		this.setStyle();
+	}
+
+	initStyle() {
+		this.style.cssText = `
+            display:block;
+			line-height: 1.5;
+        `;
 	}
 
 	setStyle() {
 		const type = this.getAttribute('type');
-		this.style.cssText = styles[type ?? 'default'];
+		this.style.cssText += styles[type ?? 'default'];
 	}
 
 	static get exampleDomstring() {
@@ -275,26 +283,26 @@ const styles = {
 	primary: `
         color: slategrey;
         background-color: black;
-        padding: 1rem
     `,
 
 	secondary: `
         color: black;
         background-color: lightgrey;
-        padding: 1rem
     `,
 
 	success: `
         color: white;
         background-color: green;
-        padding: 1rem
     `,
 
 	danger: `
         color: white;
         background-color: red;
-        padding: 1rem
     `,
+
+	description:`
+		color: darkgreen;
+	`
 };
 
 var index$1 = /*#__PURE__*/Object.freeze({
@@ -302,8 +310,8 @@ var index$1 = /*#__PURE__*/Object.freeze({
 	Default: Default$1
 });
 
-const tagName = 'custom-icon-circleno';
-class CircleNo extends HTMLElement {
+const tagName = 'custom-bullet';
+class Bullet extends HTMLElement {
 	constructor() {
 		super();
 
@@ -312,63 +320,96 @@ class CircleNo extends HTMLElement {
 	}
 
 	initStyle() {
-		this.style.cssText = `
-		:host{
-			background-color: red;
-			display: inline-block;
-			width: 100px;
-			height: 100px;
+		const circleSize = this.getAttribute('circle-size') ?? '1rem';
+		const backgroundColor = this.getAttribute('background-color');
+		const color = this.getAttribute('color');
+
+		this.style.cssText =`
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			min-width: ${circleSize};
+			min-height: ${circleSize};
+			max-width: ${circleSize};
+			max-height: ${circleSize};
+			line-height: calc(${circleSize} + 0.5rem);
 			border-radius: 50%;
-			position: relative;
-			}
-			
-			:host::before {
-				content: attr(data-no);
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				color: white;
-			}`;
+			${backgroundColor ? `background-color: ${backgroundColor};` : ''}
+			${color ? `color: ${color};` : ''}
+		`;
 	}
+
 
 	setStyle() {
 		const type = this.getAttribute('type');
 		if (!type) return;
-		this.style.cssText += Vset.styles[type];
+		this.style.cssText += Bullet.styles[type];
 	}
 
+
 	static get exampleDomstring() {
-		return `<${tagName} data-no="1"></${tagName}>`;
+		return `
+<style>
+	${tagName} {
+		background-color: #000;
+		color: #fff;
+	}
+</style>
+<div style="padding: 1rem;">
+<${tagName} circle-size="2rem">1</${tagName}>
+<${tagName} circle-size="2rem">2</${tagName}>
+<${tagName} circle-size="2rem">3</${tagName}>
+<${tagName} circle-size="2rem">예</${tagName}>
+</div>
+
+<div style="padding: 1rem;">
+<${tagName} circle-size="2rem" type="rounded" 
+	background-color="rgb(124, 27, 124)" color="#fff">1</${tagName}>
+<${tagName} circle-size="2rem" type="rounded" 
+	background-color="rgb(144, 27, 124)" color="#fff">2</${tagName}>
+<${tagName} circle-size="2rem" type="rounded" 
+	background-color="rgb(184, 27, 124)" color="#fff">3</${tagName}>
+<${tagName} circle-size="2rem" type="rounded" 
+	background-color="rgb(200, 27, 124)" color="#fff">예</${tagName}>
+</div>
+`;
+
+
+
 	}
 
 	static get descriptions() {
 		return [
 			//
-			'html tag의 attribute를 활용해 스타일 지정할 수 있습니다. ex) <span class="code-block">&lt;custom-container type="primary"&gt</span>',
 		];
 
 	}
 
-	// static get styles() {
-	// 	return {};
-	// }
-
 	static get defaultDOMString() {
-		return `<${tagName} data-no="1">예제</${tagName}>`;
+		return `<${tagName}>예</${tagName}>`;
 	}
 
-	// static get styledDOMString() {
-	// 	return Object.keys(CircleNo.styles)
-	// 		.map((type) => `<${tagName} type="${type}"></${tagName}>`)
-	// 		.join('');
-	// }
+	static get styles() {
+		return {
+			rounded: `
+				border-radius: 0.5rem;
+			`,	
+			circle: `
+				border-radius: 50%;
+			`,
+		}
+	}
+
+
+	static get styledDOMString() {
+		return Object.keys(Bullet.styles)
+			.map((type) => `<${tagName} type="${type}" circle-size="2rem" background-color="rgb(124, 27, 124)" color="#fff">예</${tagName}>`)
+			.join('');
+
+	}
 }
 
-customElements.define(tagName, CircleNo);
+customElements.define(tagName, Bullet);
 
 class Default extends HTMLElement {
 	constructor() {
@@ -406,7 +447,7 @@ customElements.define('custom-icon', Default);
 
 var index = /*#__PURE__*/Object.freeze({
 	__proto__: null,
-	CircleNo: CircleNo,
+	Bullet: Bullet,
 	Default: Default
 });
 
@@ -414,7 +455,7 @@ var Components$1 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	Button: index$2,
 	Container: index$1,
-	Icon: index
+	CustomIcon: index
 });
 
 function Components() {
@@ -542,11 +583,114 @@ function Playground() {
 	return element;
 }
 
+function Home() {
+	const template = document.createElement('template');
+
+	template.innerHTML = `
+		<article id="simulator" class="page">
+			${PageHeader('simulator').innerHTML}
+			<h2>Simulator</h2>
+
+            <section class="list">
+                <h3>순수 HTML CSS 사용시</h3>
+                <section id="playground-content" class="two-panel-container">
+                    <pre class="code-content origin"><code class="language-javascript" contenteditable="true"></code></pre>
+                    <div class="result"></div>
+                </section>
+            </section>
+
+            <section class="list">
+                <h3>사용자 정의 태그 사용시</h3>
+                <section id="playground-content" class="two-panel-container">
+                    <pre class="code-content web-component"><code class="language-javascript" contenteditable="true"></code></pre>
+                    <div class="result"></div>
+                </section>
+            </section>
+		</article>
+	`;
+
+	const section = template.content.cloneNode(true).firstElementChild;
+
+    let $origin = section.querySelector('pre.code-content.origin code');
+    let str = `
+<style>
+    .wraaper{
+        background-color: slategrey;
+        display: block;
+        padding: 1rem;
+        height: 100%;
+        width: 100%;
+    }
+
+    .title{
+        color: gold;
+    }
+
+    .description{
+        color: darkgreen;
+        line-height: 1.5;
+    }
+</style>
+<div class="wraaper">
+    <h1 class="title">
+
+        타이틀
+    </h1>
+    <p class="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+    </p>
+</div>
+    `;
+    $origin.innerHTML = hljs.highlight(str.trim(), { language: 'javascript' }).value;
+    let $result = section.querySelector('pre.code-content.origin + .result');
+    $result.innerHTML = str.trim();
+
+    $origin = section.querySelector('pre.code-content.web-component code');
+    str = `
+<style>
+    .wraaper{
+        background-color: slategrey;
+        display: block;
+        padding: 1rem;
+        height: 100%;
+        width: 100%;
+    }
+
+    .wrapper > * {
+        background: none;
+    }
+
+    .title{
+        color: gold;
+    }
+
+    .description{
+        color: darkgreen;
+        line-height: 1.5;
+    }
+</style>
+<custom-container class="wraaper">
+    <h1 class="title">
+        타이틀
+    </h1>
+    <custom-container type="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+    </custom-container>
+</custom-container>
+    `;
+    $origin.innerHTML = hljs.highlight(str.trim(), { language: 'javascript' }).value;
+    $result = section.querySelector('pre.code-content.web-component + .result');
+    section.querySelector('pre.code-content.web-component + .result').innerHTML = str.trim();
+
+    return section;
+}
+
 var Pages = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	Components: Components,
-	Home: Home,
-	Playground: Playground
+	Home: Home$1,
+	Playground: Playground,
+	Simulator: Home
 });
 
 const queryParams = new URLSearchParams(window.location.search);
